@@ -211,6 +211,15 @@
       WHERE project_id = #{projectId}
     </select>
 
+    <select id="selectDataAnalysisJson" parameterType="string" resultType="map">
+      SELECT dp_analysis_id, data_analysis_json
+      FROM DP_ANLS_INFO
+      WHERE dp_analysis_id = (
+        SELECT dp_analysis_id
+        FROM LEARN_HIST
+        WHERE learn_hist_no = #{learnHistNo}
+      )
+    </select>
 
     <update id="updateProjectSttus" parameterType="map">
         UPDATE PROJECT_INFO

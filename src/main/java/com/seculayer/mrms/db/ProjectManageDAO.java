@@ -208,6 +208,15 @@ public class ProjectManageDAO {
         return rst;
     }
 
+    public Map<String, Object> selectDataAnalysisJson(String learnHistNo) {
+        Map<String, Object> rst;
+        try (SqlSession session = factory.openSession()) {
+            rst = session.selectOne(mapperName + "selectDataAnalysisJson", learnHistNo);
+        }
+
+        return rst;
+    }
+
     public void updateStatus(Map<String, Object> map) {
         try (SqlSession session = factory.openSession()) {
             session.update(mapperName + "updateProjectSttus", map);
