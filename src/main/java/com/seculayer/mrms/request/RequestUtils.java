@@ -8,7 +8,6 @@ package com.seculayer.mrms.request;
 import com.seculayer.mrms.db.CommonDAO;
 import com.seculayer.mrms.db.ProjectManageDAO;
 import com.seculayer.mrms.info.DAInfo;
-import com.seculayer.mrms.info.EDAInfo;
 import com.seculayer.mrms.info.RcmdInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,14 +37,6 @@ public class RequestUtils {
         logger.debug(rcmdInfo.toString());
 
         return rcmdInfo;
-    }
-
-    public static EDAInfo createEDAInfo(Map<String, Object> schd) throws IOException {
-        EDAInfo edaInfo = new EDAInfo(schd.get("eda_id").toString());
-        edaInfo.init(schd);
-        logger.debug(edaInfo.toString());
-
-        return edaInfo;
     }
 
 //    public static LearnInfo createLearnInfo(Map<String, Object> schedule, String key) throws IOException {

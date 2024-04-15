@@ -106,19 +106,6 @@ public abstract class KubeJob {
         return containers;
     }
 
-    protected List<V1Container> edaContainers(String jobType){
-        List<V1Container> containers = new ArrayList<>();
-        containers.add(
-            new EDAContainer(jobType)
-                .info(this.info)
-                .workerIdx(workerIdx)
-                .configMapList(this.configMapList)
-                .make()
-        );
-
-        return containers;
-    }
-
     protected List<V1Container> mlpsContainers(String jobType){
         List<V1Container> containers = new ArrayList<>();
         containers.add(

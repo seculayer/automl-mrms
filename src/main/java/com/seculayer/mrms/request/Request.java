@@ -61,14 +61,6 @@ abstract public class Request extends Thread {
         }
     }
 
-    public static void makeEDAJob(EDAInfo edaInfo, String jobType, int workerIdx){
-        try{
-            createJob(makeJob(edaInfo, jobType, workerIdx));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     public void makeRcmdJob(RcmdInfo rcmdInfo, String jobType, int workerIdx) {
         try{
             createJob(makeJob(rcmdInfo, jobType, workerIdx));
@@ -114,12 +106,6 @@ abstract public class Request extends Thread {
         switch (jobType){
             case Constants.JOB_TYPE_DA_CHIEF: case Constants.JOB_TYPE_DA_WORKER:
                 return new DAJob()
-                        .info(info)
-                        .jobType(jobType)
-                        .workerIdx(workerIdx)
-                        .make();
-            case Constants.JOB_TYPE_EDA_CHIEF: case Constants.JOB_TYPE_EDA_WORKER:
-                return new EDAJob()
                         .info(info)
                         .jobType(jobType)
                         .workerIdx(workerIdx)
