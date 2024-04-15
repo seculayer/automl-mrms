@@ -113,8 +113,6 @@ public abstract class KubeContainer {
         switch(this.jobType){
             case Constants.JOB_TYPE_DA_CHIEF: case Constants.JOB_TYPE_DA_WORKER:
                 return ((DAInfo)this.info).getDatasetId();
-            case Constants.JOB_TYPE_EDA_CHIEF: case Constants.JOB_TYPE_EDA_WORKER:
-                return ((EDAInfo)this.info).getKey();
             case Constants.JOB_TYPE_DPRS: case Constants.JOB_TYPE_MARS: case Constants.JOB_TYPE_HPRS:
                 return ((RcmdInfo)this.info).getProjectID();
             case Constants.JOB_TYPE_LEARN:
