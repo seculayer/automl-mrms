@@ -5,6 +5,7 @@ import com.seculayer.mrms.managers.MRMServerManager;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class DADelChecker extends Checker {
@@ -30,7 +31,8 @@ public class DADelChecker extends Checker {
         try {
             FileUtils.forceDelete(f);
             logger.info("DA Meta Folder[{}] is deleted..", folderPath);
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {}
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

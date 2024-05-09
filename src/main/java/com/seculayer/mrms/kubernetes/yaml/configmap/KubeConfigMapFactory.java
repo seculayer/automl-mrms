@@ -9,8 +9,6 @@ public class KubeConfigMapFactory {
         switch (metaname){
             case "da-conf":
                 return new DAConfigMap().configMap(configMap);
-            case "eda-conf":
-                return new EDAConfigMap().configMap(configMap);
             case "dprs-conf":
                 return new DPRSConfigMap().configMap(configMap);
             case "mars-conf":

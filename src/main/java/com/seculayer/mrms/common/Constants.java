@@ -22,8 +22,6 @@ public class Constants {
 
     public static final String JOB_TYPE_DA_CHIEF = "da-chief";
     public static final String JOB_TYPE_DA_WORKER = "da-worker";
-    public static final String JOB_TYPE_EDA_CHIEF = "eda-chief";
-    public static final String JOB_TYPE_EDA_WORKER = "eda-worker";
     public static final String JOB_TYPE_DPRS = "dprs";
     public static final String JOB_TYPE_MARS = "mars";
     public static final String JOB_TYPE_HPRS = "hprs";

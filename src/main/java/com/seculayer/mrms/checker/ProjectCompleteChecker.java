@@ -160,6 +160,7 @@ public class ProjectCompleteChecker extends Checker {
         String evalRstStr = commonDAO.selectEvalResult(histNo);
 
         try {
+//            this.logger.info("evalRstStr : " + evalRstStr);
             Map<String, Object> evalRstMap = mapper.readValue(evalRstStr, Map.class);
             for (String key : evalRstMap.keySet()) {
                 List<Object> rstList = mapper.readValue(evalRstMap.get(key).toString(), List.class);
@@ -179,13 +180,15 @@ public class ProjectCompleteChecker extends Checker {
                 }
             }
         } catch (JsonMappingException e){
-
+//            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
         if (totalList != null) {
+//            this.logger.info("totalList : " + totalList.toString());
+            this.change_origin_label(learnHistInfo, totalList);
+
             Map<String, Object> paramMap = new HashMap<>();
             paramMap.put("hist_no", histNo);
             try {
@@ -198,7 +201,45 @@ public class ProjectCompleteChecker extends Checker {
             }
             commonDAO.updateEvalResult(paramMap);
         }
+    }
 
+    private void change_origin_label(Map<String, Object> learnHistInfo, List<Object> _totalList) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        String histNo = learnHistInfo.get("learn_hist_no").toString();
+        Map<String, Object> rst = projectDAO.selectDataAnalysisJson(histNo);
+        String dataAnalysisJsonStr = rst.get("data_analysis_json").toString();
+
+        try {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> dataAnalysisJsonList = mapper.readValue(dataAnalysisJsonStr, List.class);
+            Map<String, Object> labelJson = dataAnalysisJsonList.get(0);
+
+            @SuppressWarnings("unchecked")
+            Map<String, Object> statistic = (Map<String, Object>) labelJson.get("statistic");
+            @SuppressWarnings("unchecked")
+            Map<String, Object> uniques = (Map<String, Object>) statistic.get("unique");
+            @SuppressWarnings("unchecked")
+            Map<String, Object> unique = (Map<String, Object>) uniques.get("unique");
+            Set<String> uniqueKeySet = unique.keySet();
+            List<String> uniqueKeyList = new ArrayList<>(uniqueKeySet);
+
+            for (Object o : _totalList) {
+                @SuppressWarnings("unchecked")
+                Map<String, Object> outerMap = (Map<String, Object>) o;
+                for (int i = 0; i < uniqueKeyList.size(); i++) {
+                    String outerKey = String.valueOf(i);
+                    // 원래의 키와 레이블의 index가 같을 경우 수행 안함
+                    if (outerMap.containsKey(outerKey) && !uniqueKeyList.get(i).equals(outerKey)) {
+                        outerMap.put(uniqueKeyList.get(i), outerMap.get(outerKey));
+                        outerMap.remove(outerKey);
+                    }
+                }
+            }
+        } catch (Exception e){
+            this.logger.error("str to List<Map<String, Object>> mapper error. data_analysis_json : " + dataAnalysisJsonStr);
+            e.printStackTrace();
+        }
     }
 
     private String getTestAcc(List<Object> totalList) {

@@ -276,6 +276,12 @@ public class KubeUtil {
         boolean rst = cpuCores * ratio > (activeCores + (podCpuLimit * numPod));
         if (!rst) {
             logger.info(String.format("cpu usage / threashold / pod cpu limit : [%d / %.2f / %d]", activeCores, cpuCores * ratio, podCpuLimit));
+            try {
+                Thread.sleep(30000);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+                e.printStackTrace();
+            }
         }
         return rst;
     }
